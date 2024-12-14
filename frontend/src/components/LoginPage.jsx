@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  const [username, setLastName] = useState("");
+  const [username, setUsername] = useState(""); // Corrected setLastName to setUsername
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -18,10 +18,19 @@ const LoginPage = () => {
           password,
         }
       );
-      localStorage.setItem("token", response.data.token); // Store JWT in local storage
-      navigate("/feedback"); // Redirect to feedback page
+
+      // Store JWT in localStorage if login is successful
+      localStorage.setItem("token", response.data.token);
+
+      // Redirect to the feedback page
+      navigate("/feedback");
     } catch (err) {
-      setError("Invalid email or password");
+      // Handle error: display the error message returned from the backend
+      if (err.response && err.response.data && err.response.data.message) {
+        setError(err.response.data.message); // Show server's error message
+      } else {
+        setError("An error occurred during login.");
+      }
     }
   };
 
@@ -29,12 +38,12 @@ const LoginPage = () => {
     <div>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-      <div>
+        <div>
           <label>Username:</label>
           <input
             type="text"
             value={username}
-            onChange={(e) => setLastName(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)} // Corrected onChange handler
             required
           />
         </div>

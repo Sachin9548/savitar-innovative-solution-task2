@@ -7,8 +7,9 @@ const authMiddleware = (req, res, next) => {
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, "mernproject");
         req.user = decoded; // attach user info to the request object
+        console.log('Decoded user:', decoded); // Debugging log
         next();
     } catch (err) {
         return res.status(401).json({ message: 'Invalid or expired token' });

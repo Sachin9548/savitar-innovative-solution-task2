@@ -47,7 +47,7 @@ router.post('/login', async (req, res) => {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user._id, role: user.role }, "mernproject", { expiresIn: '1h' });
 
         res.json({ token });
     } catch (err) {

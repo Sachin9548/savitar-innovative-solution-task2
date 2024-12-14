@@ -26,15 +26,28 @@ router.post('/', authMiddleware, async (req, res) => {
 // Get feedbacks of a specific employee (Employee)
 router.get('/', authMiddleware, async (req, res) => {
     const employeeId = req.user.userId; // User ID from token
+    console.log('Employee ID from token:', employeeId); // Debugging log
+
+    if (!employeeId) {
+        return res.status(400).json({ message: 'User ID is missing in token' });
+    }
 
     try {
-        const feedbacks = await Feedback.find({ employeeId });
-        res.json(feedbacks);
+        // Find feedbacks associated with the logged-in employee
+        const feedbacks = await Feedback.find({ employeeId })
+            .populate('employeeId', 'username'); // Optional: Populate employee username
+
+        if (!feedbacks || feedbacks.length === 0) {
+            return res.status(404).json({ message: 'No feedback found' });
+        }
+
+        res.status(200).json(feedbacks);
     } catch (err) {
-        console.error(err.message);
+        console.error('Error fetching feedback:', err.message);
         res.status(500).json({ message: 'Server error' });
     }
 });
+
 
 // Edit feedback (Employee)
 router.put('/:id', authMiddleware, async (req, res) => {
