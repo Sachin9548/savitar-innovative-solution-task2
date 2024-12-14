@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .dashboard {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .metrics {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .metric {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    width: 150px;
+    text-align: center;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .metric h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .metric p {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
